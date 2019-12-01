@@ -1,39 +1,49 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  TextInput,
+  ScrollView
+} from "react-native";
 
 export default function App() {
+  const [person, setPerson] = useState([
+    { name: "Roman", key: "1" },
+    { name: "Toman", key: "2" },
+    { name: "Goman", key: "3" },
+    { name: "Homan", key: "4" },
+    { name: "Joman", key: "5" },
+    { name: "Koman", key: "6" },
+    { name: "Loman", key: "7" }
+  ]);
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.boldText}>Hello</Text>
-      </View>
-      <View style={styles.body}>
-        <Text style={styles.boldText}>
-          Lorem ipsum,<Text>Test</Text> dolor sit amet
-        </Text>
-        <Text>Lorem ipsum, dolor sit amet</Text>
-        <Text>Lorem ipsum, dolor sit amet</Text>
-      </View>
+      <ScrollView>
+        {person.map(item => (
+          <View key={item.key}>
+            <Text style={styles.item}>{item.name}</Text>
+          </View>
+        ))}
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  item: {
+    marginTop: 24,
+    padding: 30,
+    backgroundColor: "pink",
+    fontSize: 24
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  header: {
-    backgroundColor: "red",
-    padding: 20
-  },
-  boldText: {
-    fontWeight: "bold"
-  },
-  body: {
-    backgroundColor: "yellow",
-    padding: 20
+    paddingTop: 40,
+    paddingHorizontal: 20
+    // alignItems: "center",
+    // justifyContent: "center"
   }
 });
