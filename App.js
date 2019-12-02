@@ -5,28 +5,44 @@ import {
   View,
   Button,
   TextInput,
-  ScrollView
+  FlatList,
+  TouchableOpacity
 } from "react-native";
 
 export default function App() {
   const [person, setPerson] = useState([
-    { name: "Roman", key: "1" },
-    { name: "Toman", key: "2" },
-    { name: "Goman", key: "3" },
-    { name: "Homan", key: "4" },
-    { name: "Joman", key: "5" },
-    { name: "Koman", key: "6" },
-    { name: "Loman", key: "7" }
+    { name: "Roman", id: "1" },
+    { name: "Toman", id: "2" },
+    { name: "Goman", id: "3" },
+    { name: "Homan", id: "4" },
+    { name: "Joman", id: "5" },
+    { name: "Koman", id: "6" },
+    { name: "Loman", id: "7" }
   ]);
+  const pressItem = id => {
+    setPerson(prevState => {
+      return prevState.filter(person => person.id != id);
+    });
+  };
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <FlatList
+        numColumns={2}
+        keyExtractor={item => item.id}
+        data={person}
+        renderItem={({ item }) => (
+          <TouchableOpacity onPress={() => pressItem(item.id)}>
+            <Text style={styles.item}>{item.name}</Text>
+          </TouchableOpacity>
+        )}
+      />
+      {/* <ScrollView>
         {person.map(item => (
           <View key={item.key}>
             <Text style={styles.item}>{item.name}</Text>
           </View>
         ))}
-      </ScrollView>
+      </ScrollView> */}
     </View>
   );
 }
@@ -42,7 +58,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     paddingTop: 40,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    // marginHorizontal:10,
+    marginLeft: 10
     // alignItems: "center",
     // justifyContent: "center"
   }
