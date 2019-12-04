@@ -1,67 +1,47 @@
 import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  TextInput,
-  FlatList,
-  TouchableOpacity
-} from "react-native";
+import { StyleSheet, Text, View, FlatList } from "react-native";
+import Header from "./components/header";
+import TodoItem from "./components/todoItem";
 
 export default function App() {
-  const [person, setPerson] = useState([
-    { name: "Roman", id: "1" },
-    { name: "Toman", id: "2" },
-    { name: "Goman", id: "3" },
-    { name: "Homan", id: "4" },
-    { name: "Joman", id: "5" },
-    { name: "Koman", id: "6" },
-    { name: "Loman", id: "7" }
+  const [todos, setTodos] = useState([
+    { text: "Buy coffe", id: "1" },
+    { text: "create an app", id: "2" },
+    { text: "play games", id: "3" }
   ]);
-  const pressItem = id => {
-    setPerson(prevState => {
-      return prevState.filter(person => person.id != id);
+  const pressHandler = key => {
+    setTodos(prevTodos => {
+      return prevTodos.filter(todo => todo.id != key);
     });
   };
+
   return (
     <View style={styles.container}>
-      <FlatList
-        numColumns={2}
-        keyExtractor={item => item.id}
-        data={person}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => pressItem(item.id)}>
-            <Text style={styles.item}>{item.name}</Text>
-          </TouchableOpacity>
-        )}
-      />
-      {/* <ScrollView>
-        {person.map(item => (
-          <View key={item.key}>
-            <Text style={styles.item}>{item.name}</Text>
-          </View>
-        ))}
-      </ScrollView> */}
+      <Header />
+      <View style={styles.content}>
+        <View style={styles.list}>
+          <FlatList
+            data={todos}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => <TodoItem 
+            item={item}  
+            pressHandler={pressHandler}/>}
+          />
+        </View>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  item: {
-    marginTop: 24,
-    padding: 30,
-    backgroundColor: "pink",
-    fontSize: 24
-  },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
-    paddingTop: 40,
-    paddingHorizontal: 20,
-    // marginHorizontal:10,
-    marginLeft: 10
-    // alignItems: "center",
-    // justifyContent: "center"
+    backgroundColor: "#fff"
+  },
+  content: {
+    padding: 40
+  },
+  list: {
+    marginTop: 20
   }
 });
