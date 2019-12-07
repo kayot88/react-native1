@@ -1,10 +1,12 @@
 import React, { Component, useState } from "react";
 import { Text, View, TextInput, StyleSheet, Button } from "react-native";
-const AppTodo = () => {
+import uuid from 'uuid'
+const AppTodo = ({addTodo}) => {
   const [text, setText] = useState("");
   const changeTextHandler = val => {
     setText(val);
   };
+ 
   // console.log(text);
 
   return (
@@ -14,11 +16,7 @@ const AppTodo = () => {
         onChangeText={changeTextHandler}
         style={styles.input}
       />
-      <Button
-      title={'add item'}
-      color={'coral'}
-      onPress={() =>  console.log('click') }
-      />
+      <Button title={"add item"} color="coral" onPress={() => addTodo(text)} />
     </View>
   );
 };
